@@ -1,0 +1,14 @@
+<document xmlns="http://cnx.rice.edu/cnxml">
+
+<title>Introduction</title>
+<metadata xmlns:md="http://cnx.rice.edu/mdml">
+  <md:content-id>m52295</md:content-id>
+  <md:title>Introduction</md:title>
+  <md:abstract>Description of the motivation for undertaking the task of creating selective transparent headphones.</md:abstract>
+  <md:uuid>fa60ca12-e46a-441a-ac7d-940e9c1d0832</md:uuid>
+</metadata>
+
+<content>
+  <para id="eip-456">The advancement of signal processing technologies has consistently improved the enjoyment of listening to music. For example, noise cancelling techniques have been widely applied to headphones that, in addition to physical noise isolation, provide further reduction in noise.</para><para id="delete_me">We believe, however, that it is sometimes important for music listeners with a pair of good noise isolating headphone to be aware of certain surrounding signals. For example, when people are crossing the street while listening to music, they really want to hear car horns to be warned of possible danger. We also think that human speech is important, and that people may want to hear others talking to them while they are listening to music.</para><para id="eip-396">Based on the assumption above, we propose to build a selective transparent headphone that propagates certain surrounding sound signals and suppresses all other signals. In this project, we explore possibility to select only speech signal to propagate and silence other surrounding sounds.</para><para id="eip-39">The following sections are organized as follows. The second section provides an overview of the project, defining the problem and explaining high level system implementation. The third to the fifth sections explain in detail the blind source separation algorithm and binary artificial neural network, respectively. The following sections discuss experiment results, and suggest next steps.</para></content>
+
+</document>

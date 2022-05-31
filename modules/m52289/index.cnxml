@@ -1,0 +1,230 @@
+<document xmlns="http://cnx.rice.edu/cnxml">
+  <title>Blind Source Separation</title>
+<metadata xmlns:md="http://cnx.rice.edu/mdml">
+  <md:content-id>m52289</md:content-id>
+  <md:title>Blind Source Separation</md:title>
+  <md:abstract>Describes the method to separate an arbitrary signal into its independent components for the application of creating a selective transparent headphone.</md:abstract>
+  <md:uuid>cd1f55f0-ecdc-496c-a72e-b799f03429fb</md:uuid>
+</metadata>
+
+<content>
+    <section id="eip-879"><title>Background</title><para id="eip-202">
+When separating mixtures of instantaneously mixed signals, independent component analysis works very well, but this ideal situation is rarely found in the real-world.  In practical applications, the environment distorts audio signals by adding echoes, reflections, and ambient noise.  Additionally independent component analysis, in its purest form, assumes that source signals do not have any propagation delay, which is an assumption that cannot be applied in this case.  Recording sources from two microphones placed in different locations will inevitably introduce propagation delays, so the blind source separation method used must also consider this issue.
+</para><para id="eip-813">To solve problems detailed above, the blind source separation problem will be redefined in the time-frequency domain.  By taking the short-time Fourier transform (STFT) of the audio inputs, we can represent the inputs as the following.</para>
+
+<figure id="stftfig">
+<media id="stft" alt="short time Fourier transform.">
+	   
+  <image mime-type="image/png" src="../../media/stft.png" height="25"/>
+		 
+</media>
+</figure>
+
+<para id="eip-812"><emphasis effect="bold">Xi(ω,t)</emphasis> refers to the input observed at the <emphasis effect="italics">i</emphasis>th microphone observed at time <emphasis effect="italics">t</emphasis>.  The <emphasis effect="italics">T</emphasis> symbol refers to the transpose, so in this case, the input sources are represented along the rows.  For our application, we will assume that the number of observed inputs and the number of separated sources are both equal to the constant <emphasis effect="italics">M</emphasis>.  We can, now, formulate our blind source separation problem as the following.</para><figure id="newformulationFig">
+<media id="newformulation" alt="New Formulation">
+	   
+  <image mime-type="image/png" src="../../media/newFormulation.png" height="25"/>
+		 
+</media>
+</figure>
+
+<para id="eip-940">In this case, <emphasis effect="bold">s(ω,t)</emphasis>, refers to the vector of source signals observed at frequency <emphasis effect="italics">ω</emphasis> and at time <emphasis effect="italics">t</emphasis>.  The second term, <emphasis effect="bold">n(ω,t)</emphasis>, represents any type of noise or distortions that may be present in the observed signals (noise, reflections, etc.).  The blind source separation method attempts to solve for the mixing matrix, <emphasis effect="bold">A(ω)</emphasis>, which can be represented as the following.</para><figure id="mixingMatrixFig">
+<media id="mixingMatrix" alt="Mixing Matrix">
+	   
+  <image mime-type="image/png" src="../../media/mixingmatrix.png" height="25"/>
+		 
+</media>
+</figure>
+
+<para id="eip-3">Here, <emphasis effect="bold">Hi,j(ω)</emphasis>, refers to the transfer function of the <emphasis effect="italics">j</emphasis>th source to the <emphasis effect="italics">i</emphasis>th microphone.  Additionally, <emphasis effect="bold">τi,j</emphasis>, refers to the propagation delay from the <emphasis effect="italics">j</emphasis>th source to the <emphasis effect="italics">i</emphasis>th microphone.</para><para id="eip-792">The system, for which our problem is defined on, is now redefined from an instantaneous mixture of signals to a convolutional mixture in the time-domain of the following form.</para>
+
+<figure id="timeDomainDefinitionFig">
+<media id="timeDomainDefinition" alt="Time Domain Definition">
+	   
+  <image mime-type="image/png" src="../../media/timeDomainDefinition.png" height="25"/>
+		 
+</media>
+</figure>
+
+<para id="eip-628">This formulation allows for a solution which considers the distortion, <emphasis effect="bold">n(ω,t)</emphasis>, added by the environment and considers the inherent propagation delay that is inherently present in our application.</para><para id="eip-430">Since the new formulation of the blind source separation problem is a convolutional system in the time-domain, we will solve the separation problem in the time-frequency domain formulation shown in Figure 2.  Given our approach outlined above, we can solve for the complete frequency-domain separation filter shown below.</para><figure id="finalFilterFig">
+<media id="finalFilter" alt="Final Filter">
+	   
+  <image mime-type="image/png" src="../../media/finalFilter.png" height="25"/>
+		 
+</media>
+</figure>
+
+<para id="eip-859"><emphasis effect="bold">B(ω)</emphasis> is the separation filter of the system.  Applying this filter will separate the spectrum of the observed signal into the spectra of the source signals observed at frequency, <emphasis effect="italics">ω</emphasis>.  As stated above, by reformulating the problem into the frequency domain, the convolutional mixture becomes transformed into an instantaneous mixture.  As such, independent component analysis can be applied to separate the source signals at each frequency.  However, in doing so, we introduce other problems, inherent to the independent component analysis method, that the other filters attempt to resolve.</para><para id="eip-184">The following sections will explain the three filters in detail.</para><list id="eip-127"><item><emphasis effect="bold">B(ω)</emphasis>, the separation filter.</item>
+      <item><emphasis effect="bold">Bm+</emphasis>, the normalization filter used to solve the scaling problem that arises after applying independent component analysis.</item>
+      <item><emphasis effect="bold">P(ω)</emphasis>, the permutation filter used to solve the frequency distortion problem that arises after applying independent component analysis.</item></list></section><section id="eip-28"><title>Separation Filter</title><para id="eip-478">The separation filter, shown in the previous section can be broken down into the following components.</para>
+
+<figure id="separationFilterFig">
+<media id="separationFilter" alt="Separation Filter">
+	   
+  <image mime-type="image/png" src="../../media/separationFilter.png" height="25"/>
+		 
+</media>
+</figure>
+
+<para id="eip-766"><emphasis effect="bold">W(ω)</emphasis> is the preprocessing filter used to reduce reflections and ambient noise by using the subspace method.  <emphasis effect="bold">U(ω)</emphasis> is the filter obtained by applying independent component analysis after preprocessing.</para><section id="eip-660"><title>I. Subspace Method</title><para id="eip-177">The spatial correlation, or autocorrelation, matrix at frequency <emphasis effect="italics">ω</emphasis> is defined below.
+</para><figure id="spatialCorrelationFig">
+<media id="spatialCorrelation" alt="Spatial Correlation">
+	   
+  <image mime-type="image/png" src="../../media/spatialCorrelation.png" height="25"/>
+		 
+</media>
+</figure>
+
+<para id="eip-599">Given that there are <emphasis effect="italics">M</emphasis> inputs and <emphasis effect="italics">M</emphasis> sources, the resulting matrix will be <emphasis effect="italics">M</emphasis>×<emphasis effect="italics">M</emphasis>.  This matrix can be rewritten in the following way.</para>
+
+<figure id="rewrittenCorrelationFig">
+<media id="rewrittenCorrelation" alt="Rewritten Correlation Matrix">
+	   
+  <image mime-type="image/png" src="../../media/rewritten.png" height="25"/>
+		 
+</media>
+<caption>
+The spatial correlation matrix.
+</caption>
+</figure>
+
+<figure id="nCS">
+<media id="noiseCrossSpectrum" alt="Noise Cross Spectrum">
+	   
+  <image mime-type="image/png" src="../../media/noise_cross_spectrum.png" height="25"/>
+		 
+</media>
+<caption>
+The noise correlation matrix.
+</caption>
+</figure>
+
+<figure id="QM">
+<media id="QMatrix" alt="Q Matrix">
+	   
+  <image mime-type="image/png" src="../../media/Q.png" height="25"/>
+		 
+</media>
+<caption>
+The sources' cross-spectrum matrix.
+</caption>
+</figure>
+
+<para id="eip-9">In other words, <emphasis effect="bold">K </emphasis>is the correlation matrix of <emphasis effect="bold">n(t)</emphasis> and <emphasis effect="bold">Q</emphasis> is the cross-spectrum matrix of the sources.  However, since the source signals, <emphasis effect="bold">s(t)</emphasis>, are unknown at this point, this equation cannot be directly solved.  Instead, we can represent the generalized eigenvalue decomposition of the spatial correlation matrix in the following manner.</para><figure id="generalizedDecompositionFig">
+<media id="generalizedDecomposition" alt="Generalized Decomposition">
+	   
+  <image mime-type="image/png" src="../../media/generalizedDecomposition.png" height="25"/>
+		 
+</media>
+</figure>
+
+<para id="eip-562"><emphasis effect="bold">E</emphasis> refers is the eigenvector matrix, <emphasis effect="bold">E = [e1,e2, …,eM]</emphasis>, and <emphasis effect="bold">Λ = diag(λ1,λ2,…,λM)</emphasis> refers to the eigenvalues of <emphasis effect="bold">R</emphasis>.  Since <emphasis effect="bold">K</emphasis>, the noise correlation matrix, cannot be directly observed apart from the source signals, we will assume that <emphasis effect="bold">K = I</emphasis>, which will evenly distribute the reflections and ambient noise induced by the environment among the estimated sources.  As such, the eigenvalue decomposition of <emphasis effect="bold">R</emphasis> can be rewritten as the following.</para><figure id="standardDecompositionFig">
+<media id="standardDecomposition" alt="Standard Decomposition">
+	   
+  <image mime-type="image/png" src="../../media/standardDecomposition.png" height="25"/>
+		 
+</media>
+</figure>
+
+<para id="eip-410">The final preprocessing filter uses the eigevector and eigenvalue matrices resulting from the standard eigenvalue decomposition of the spatial correlation matrix and is shown below.</para>
+
+<figure id="finalSubSpaceFilterFig">
+<media id="finalSubSpaceFilter" alt="Final Preprocessing Filter">
+	   
+  <image mime-type="image/png" src="../../media/finalSubSpaceFilter.png" height="25"/>
+		 
+</media>
+</figure>
+
+</section><section id="eip-477"><title>II. Independent Component Analysis</title><para id="eip-295">By applying the preprocessing filter obtained from the subspace method, our observed signals are now of the following form.</para>
+
+<figure id="applySubSpaceFig">
+<media id="applySubSpace" alt="Applying the Subspace filter">
+	   
+  <image mime-type="image/png" src="../../media/applySubSpace.png" height="25"/>
+		 
+</media>
+</figure>
+
+<para id="eip-393">To estimate the source signals from the preprocessed input signals, we can use independent component analysis to solve the linear system displayed below, for the filter <emphasis effect="bold">U(ω)</emphasis>.</para><figure id="ICAapplyFig">
+<media id="ICAapply" alt="Applying the ICA Filter">
+	   
+  <image mime-type="image/png" src="../../media/ICAapply.png" height="25"/>
+		 
+</media>
+</figure>
+
+<para id="eip-554">Now that the separation filter at each frequency has been found, the problems that arise from the separation process must be addressed.</para></section></section><section id="eip-495"><title>Scaling</title><para id="eip-344">
+The scaling problem that results from applying independent component analysis can be resolved using the filter shown below.
+</para>
+
+<figure id="scalingFig">
+<media id="scaling" alt="Scaling Filter">
+	   
+  <image mime-type="image/png" src="../../media/scaling.png" height="25"/>
+		 
+</media>
+</figure>
+
+<para id="eip-771"><emphasis effect="bold">Bm,n+(ω)</emphasis> refers to the <emphasis effect="italics">(m,n)</emphasis>th entry in <emphasis effect="bold">B+(ω)</emphasis>, which is the pseudo-inverse of <emphasis effect="bold">B(ω)</emphasis> (regular inverse also works here since we assume that the number of separated sources and the number of inputs are both <emphasis effect="italics">M</emphasis>, so that the resulting separation matrix is square).  Additionally, <emphasis effect="italics">m</emphasis> refers to an arbitrary row or microphone in <emphasis effect="bold">B+(ω)</emphasis>.  By applying this matrix, each signal, <emphasis effect="italics">i</emphasis>, is amplified by the component of signal <emphasis effect="italics">i</emphasis> observed at microphone or input <emphasis effect="italics">m</emphasis>.  Essentially, this filter amplifies the frequency components of the separated source signals so that the waveforms of the resulting sources will be distinguishable and audible.</para></section><section id="eip-633"><title>Permutation</title><para id="eip-22">
+A second critical problem that arises after applying independent component analysis is that the order in which the source signals are returned is unknown.  Since independent component analysis is applied at each frequency, we must find the permutation of components that has the highest chance of being the correct permutation to reconstruct the source signals and minimize the amount of frequency distortion caused by independent component analysis.
+</para><para id="eip-876">We define the permutation matrix, <emphasis effect="bold">P</emphasis>, as the following.</para><figure id="pseudoInverseFig">
+<media id="pseudoInverse" alt="Pseudo Inverse of Separation Filter">
+	   
+  <image mime-type="image/png" src="../../media/pseudo_inverse.png" height="25"/>
+		 
+</media>
+</figure>
+
+<figure id="permutationWithPseudoInverseFig">
+<media id="permutationWithPseudoInverse" alt="Permutation Filter Applied to Pseudo Inverse of Separation Filter">
+	   
+  <image mime-type="image/png" src="../../media/permutationWithPseudoInverse.png" height="25"/>
+		 
+</media>
+</figure>
+
+<figure id="zBarFig">
+<media id="zBar" alt="Applied Pseudo Inverse Matrix">
+	   
+  <image mime-type="image/png" src="../../media/zBar.png" height="25"/>
+		 
+</media>
+</figure>
+
+<para id="eip-244">The matrix, <emphasis effect="bold">P</emphasis>, exchanges the column vectors of <emphasis effect="bold">Z(ω)</emphasis> to get different permutations.  We define the cosine of <emphasis effect="italics">θn</emphasis> between the two vectors <emphasis effect="bold">zn(ω)</emphasis> and <emphasis effect="bold">zn(ω0)</emphasis>, where <emphasis effect="italics">ω0</emphasis> is the reference frequency is as follows.</para><figure id="vectorAngleFig">
+<media id="vectorAngle" alt="Angle Between Filter Vectors">
+	   
+  <image mime-type="image/png" src="../../media/vectorAngle.png" height="25"/>
+		 
+</media>
+</figure>
+
+<para id="eip-139">The permutation is, then, determined by the following.</para>
+
+<figure id="permutationFig">
+<media id="permutation" alt="Permutation Filter Definition">
+	   
+  <image mime-type="image/png" src="../../media/permutation.png" height="25"/>
+		 
+</media>
+</figure>
+
+<para id="eip-501">The cost function, <emphasis effect="bold">F(P)</emphasis>, used above, is defined as follows.</para><figure id="costFunctionFig">
+<media id="costFunction" alt="Cost Function for Permutation Filter">
+	   
+  <image mime-type="image/png" src="../../media/costFunction.png" height="50"/>
+		 
+</media>
+</figure>
+
+<para id="eip-713">This compares the inverse vector filter at each frequency with a filter at a reference frequency, <emphasis effect="italics">ω0</emphasis>.  However, if we use the same reference frequency to find the permutation at every other frequency, then the problem arises if the filter at the reference frequency has the incorrect permutation.  In order to minimize this error, a new reference frequency is chosen after the permutations of filters at <emphasis effect="bold">K</emphasis> frequencies are found.  As such, the frequency range of a reference frequency, <emphasis effect="italics">ω0</emphasis>, is as follows.</para><figure id="frequencyRangeFig">
+<media id="frequencyRange" alt="Frequency Range">
+	   
+  <image mime-type="image/png" src="../../media/frequencyRange.png" height="25"/>
+		 
+</media>
+</figure>
+
+</section></content>
+</document>

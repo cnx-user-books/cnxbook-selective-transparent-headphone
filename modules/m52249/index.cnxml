@@ -1,0 +1,35 @@
+<document xmlns="http://cnx.rice.edu/cnxml">
+
+<title>Poster</title>
+<metadata xmlns:md="http://cnx.rice.edu/mdml">
+  <md:content-id>m52249</md:content-id>
+  <md:title>Poster</md:title>
+  <md:abstract>This is our poster</md:abstract>
+  <md:uuid>67bc3df5-5a3b-42f8-a629-d85e6a00325a</md:uuid>
+</metadata>
+<featured-links>
+  <!-- WARNING! The 'featured-links' section is read only. Do not edit below.
+       Changes to the links section in the source will not be saved. -->
+    <link-group type="example">
+      <link url="https://www.dropbox.com/s/4z54svjfkuuvlft/poster%20.pdf?dl=0" strength="3">poster</link>
+    </link-group>
+  <!-- WARNING! The 'featured-links' section is read only. Do not edit above.
+       Changes to the links section in the source will not be saved. -->
+</featured-links>
+<content>
+  <para id="delete_me">
+     <!-- Insert module text here -->
+  </para>
+<figure id="poster1">
+ 
+  <media id="poster" alt="poster">
+    <image mime-type="image/png" src="../../media/poster.png"/>
+  </media>
+  <caption>
+     Our Project Poster
+  </caption>
+</figure>
+        
+</content>
+
+</document>

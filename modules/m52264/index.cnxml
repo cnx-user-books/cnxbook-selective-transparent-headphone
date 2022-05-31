@@ -1,0 +1,29 @@
+<document xmlns="http://cnx.rice.edu/cnxml">
+
+<title>Project Overview</title>
+<metadata xmlns:md="http://cnx.rice.edu/mdml">
+  <md:content-id>m52264</md:content-id>
+  <md:title>Project Overview</md:title>
+  <md:abstract>Overview of the steps followed to create the system.</md:abstract>
+  <md:uuid>3c48fa71-390c-4ef9-9a6b-5a07351751cc</md:uuid>
+</metadata>
+
+<content>
+  <section id="eip-156"><title>Problem Definition</title><para id="eip-32">
+There are a number of sound signals that are of importance in the environment. In this project, we identify human speech as an important signal, that we would like to focus on. We would like to separate the environment sound signals into a signal containing only human speech and a signal containing all other speech. By making the above simplifications, the problem is reduced to finding the speech content in the surrounding environment, and forwarding the speech content to the listener while suppressing other signals. If there are no speech signals, or speech signals are weak compared to other signals, all sounds from the environment will be attenuated.
+</para></section><section id="eip-114"><title>System Implementation</title><para id="eip-71">
+We approach the problem stated above by first separating the source signals into human speech content and non-human speech with a blind source separation algorithm. After that, a classification algorithm determines which signal contains human speech, if any, and outputs that signal. A detailed overview is shown below with the system block diagram in Figure 1.
+</para>
+
+<figure id="flowFig">
+<media id="flow" alt="System Block Diagram">
+	   
+  <image mime-type="image/png" src="../../media/flow_1.png"/>
+		 
+</media>
+</figure><para id="eip-596">The audio input, a mixture of human speech and some other noise such as instrumental music, is passed to the blind source separation block. Inside this block, short time Fourier transform is first performed to change the time domain input signal into frequency domain, since all the other operations on the signals reside in frequency domain. After that a preprocessing filter is applied, which cleans the input signal by removing reflection and ambient noises. Then for each frequency, the independent component analysis algorithm separates the signal into two parts such that independence between the two signals is maximized. Scaling and permutation filters minimizes distortions caused by using the independent component analysis method. The blind source separation process outputs two signals, where at most, one signal contains speech.</para><para id="eip-39">We then implement a binary artificial neural network (ANN) for classification.The two identical ANN take the two signals separated from the source as inputs respectively and outputs a weight for each signal. We train the neural network in the way that a signal containing more human speech will output a higher weight. Based on the weights of the separated signals, the output selection multiplexer chooses the proper signal to output. That is, if one signal, referred to as A, has a higher weight than the other signal, referred to as B, and its weight is above a certain threshold (0.5), the multiplexer outputs signal A. If both the weights of signal A and signal B are below that threshold, then the multiplexer outputs nothing. We set a threshold to deal with situation where both signal contain no human speech.</para></section><para id="delete_me">
+     <!-- Insert module text here -->
+  </para>
+</content>
+
+</document>

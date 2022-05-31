@@ -1,0 +1,20 @@
+<document xmlns="http://cnx.rice.edu/cnxml">
+
+<title>Conclusion and Next Steps</title>
+<metadata xmlns:md="http://cnx.rice.edu/mdml">
+  <md:content-id>m52300</md:content-id>
+  <md:title>Conclusion and Next Steps</md:title>
+  <md:abstract>This is our conclusion</md:abstract>
+  <md:uuid>60a0f3eb-2c41-4a2c-b173-115f6a45a1fd</md:uuid>
+</metadata>
+
+<content>
+  <section id="eip-853"><title>Conclusion</title><para id="eip-745">
+From our experimental results, we can see that our Blind Source Separation algorithm is able to separate the two independent components of the mixed signal very well. After the separation, the neural network can distinguish between human speech and non-human sound with an accuracy of 98.6%. Consequently, our entire system can successfully output the human speech from a linear mixture of sound signals. 
+</para></section><section id="eip-230"><title>Next Steps</title><para id="eip-479">Implement the system in real-time. Our design currently works in the Matlab environment. It is implemented to deal with audio that is already recorded, but it does not deal with real-time audio streams. We eventually would like the system to work in real-time, separating the sources, forward speech, if any, and suppress other signals instantly so that people can benefit from this system. This implies improving the efficiency of the algorithms, and making use of Matlab SimuLink to explore the possibility of real-time implementation of our system.
+</para><para id="eip-732">Additionally, we would like to explore the possibility to separate several sources in addition to human speech. As mentioned in the introduction, other signals from the surrounding might also be important, such as a car's horn. We can improve the separation algorithm and train the neural network so that the system can recognize not only human speech, but also other important signals from the environment. With this implementation, users can have the option to forward in the signals they want. In order to achieve that, one needs to increase the number of microphones to increase the number of observed signals, and re-train the neural network so that it recognizes different types of sound signals.</para></section><para id="delete_me">
+     <!-- Insert module text here -->
+  </para>
+</content>
+
+</document>

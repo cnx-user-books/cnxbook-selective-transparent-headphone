@@ -1,0 +1,138 @@
+<document xmlns="http://cnx.rice.edu/cnxml">
+  <title>Background on Artificial Neural Network</title>
+<metadata xmlns:md="http://cnx.rice.edu/mdml">
+  <md:content-id>m52275</md:content-id>
+  <md:title>Background on Artificial Neural Network</md:title>
+  <md:abstract>This module talks about the backgrounds on artificial neural network</md:abstract>
+  <md:uuid>0dcb4015-7539-4ba7-b373-c0756db3c475</md:uuid>
+</metadata>
+
+<content>
+    <section id="eip-753"><para id="eip-799"/></section><para id="import-auto-id1164546234881">
+      <emphasis effect="bold">Motivation:</emphasis>
+    </para>
+    <para id="import-auto-id1164546429432">As the Blind Source Separation algorithm randomly assigns the two independent components into two output vectors, we need the artificial neural network to determine which of the two signals, if any, contains human speech. </para>
+    <para id="import-auto-id1164547431224">
+      <emphasis effect="bold">Background on Our Chosen Neural Network Model:</emphasis>
+    </para>
+    <para id="import-auto-id1164545752276">Our Neural Networks Model:</para>
+    <para id="import-auto-id1164547784662">A simplified schematics of our neural network looks like the following:</para>
+
+<figure id="neural_net">
+  
+  <media id="nn" alt="neural_net_schemaics">
+    <image mime-type="image/jpeg" src="../../media/neural_model.jpg"/>
+  </media>
+  <caption>
+     Neural Network Model
+  </caption>
+</figure>
+
+
+
+
+
+
+
+    <para id="import-auto-id1164545525690">Our artificial neural network consists of one input layer (Layer L1), one hidden layer (Layer L2), and one output layer (Layer L3). The circles labeled “+1” are called the bias units, and corresponds to the intercept term. </para>
+    <para id="import-auto-id1164548818666">Our neural network has parameters (<emphasis effect="italics">W</emphasis>,<emphasis effect="italics">b</emphasis>) = (<emphasis effect="italics">W</emphasis><sup>(1)</sup>,<emphasis effect="italics">b</emphasis><sup>(1)</sup>,<emphasis effect="italics">W</emphasis><sup>(2)</sup>,<emphasis effect="italics">b</emphasis><sup>(2)</sup>), where we write W<sup>(l)</sup><sub>ij </sub>to denote the weight associated with the connection between unit j in layer l, and unit i in layer l+1. Also, b<sup>(l)</sup><sub>i</sub> is the bias associated with unit i in layer l+1. We also use s<sub>l</sub> to denote the number of nodes in layer l (not counting the bias unit). </para><para id="import-auto-id1164543328593">We will write a<sup>(l)</sup><sub>i</sub> to denote the activation of unit i in layer l. For l=1, we also use a<sup>(1)</sup><sub>i </sub>=x<sub>i </sub>to denote the i-th input.  Given a fixed setting of the parameters W,b, our neural network defines a hypothesis h<sub>W,b</sub>(x) that outputs a real number. Specifically, the computation that this neural network represents is given by:</para>
+
+<media id="activation" alt="activation">
+  <image mime-type="image/jpeg" src="../../media/activation_formula.jpg"/>
+</media>
+
+
+
+
+
+    <para id="import-auto-id1164543720455">Let z<sup>(l)</sup><sub>i </sub>denote the total weighted sum of inputs to unit i in layer l, including the bias unit. For instance, <media id="z" alt="zformula.">
+  <image mime-type="image/jpeg" src="../../media/z.jpg" height="22" width="161"/>
+</media>
+
+
+, so that <media id="ai" alt="aiformula">
+  <image mime-type="image/jpeg" src="../../media/ai.jpg" height="25"/>
+</media>. </para>
+    <para id="import-auto-id6681521">If we extend the activation function f(.) to apply to vectors in an element-wise fashion, we can write the above equations more compactly as:</para>
+
+<media id="compact" alt="compact formula">
+  <image mime-type="image/jpeg" src="../../media/compact.jpg"/>
+</media>
+    <para id="import-auto-id1164551211243">The above equations represents the forward propagation step. More generally, as we use a<sup>(1)</sup> =x to denote the values from the input layer, then given layer l’s activations a<sup>(l)</sup> , we can compute layer l+1’s activations a<sup>(l+1)</sup> as:</para>
+
+<media id="matrix" alt="matrix formula">
+  <image mime-type="image/jpeg" src="../../media/simplified_formula.jpg"/>
+</media>
+    <para id="import-auto-id1164546257324">
+      <emphasis effect="bold">Backpropagation Algorithm:</emphasis>
+    </para>
+    <para id="import-auto-id1164546862363">Suppose we have a fixed training set
+<media id="trainingset" alt="training">
+  <image mime-type="image/jpeg" src="../../media/training set.jpg" height="25"/>
+</media>
+  of m training examples, the overall cost function is:</para>
+<media id="costfunction" alt="overallcostfunction">
+  <image mime-type="image/jpeg" src="../../media/overall_cost_function.jpg"/>
+</media>
+
+    <para id="import-auto-id1164545533988">The first term in the cost function is an average sum-of-squares error term. The second term is the regularization term which is used to prevent overfitting. The weight decay parameter λ controls the relative importance of the cost term and the regularization term. </para>
+    <para id="import-auto-id1164545636986">Our goal is to minimize the cost function J(W,b) as a function of W and b. To begin training our neural network, we will initialize each weight W<sup>(l)</sup><sub>ij </sub>and each b<sup>(l)</sup><sub>i </sub>to a small value near zero. It is important to initialize the parameters randomly for the purpose of symmetry breaking. </para>
+    <para id="import-auto-id1856842">In order to perform gradient descent to minimize the cost function, we need to compute the derivatives of the cost function with respect to W<sup>(l)</sup><sub>ij </sub>and b<sup>(l)</sup><sub>i </sub>respectively:</para>
+<media id="derivative" alt="derivative of cost function">
+  <image mime-type="image/jpeg" src="../../media/derivative_of_cost_function.jpg"/>
+</media>
+
+    <para id="import-auto-id1164547003081">The intuition behind the backpropagation algorithm is as follows. Given a training example (x,y), we will first run a “forward propagation” to compute all the activations, including the output value of the hypothesis h<sub>W,b </sub>(x). Then for each node i in layer l, we compute an error term δ<sup>(l)</sup><sub>i </sub>that measures how much that node was responsible for any errors in the output. For an output node, we can directly measure the difference between the network’s hypothesis and the true value, and use that to define the error term for the output layer. </para>
+    <para id="import-auto-id1164546382794">
+      <emphasis effect="bold">Here is the implementation of the backpropagation algorithm in MatLab:</emphasis>
+    </para>
+    <list id="import-auto-id1164545965384" list-type="enumerated" number-style="arabic">
+      <item>Perform a feedforward propagation, computing the activations for hidden layer L2 and output layer L3. </item>
+      <item>For the output layer (layer n<sub>l </sub>), set 
+<media id="error" alt="error output">
+  <image mime-type="image/jpeg" src="../../media/error_term.jpg" height="25"/>
+</media></item></list>
+    
+    <list id="import-auto-id1164544826357" list-type="enumerated" number-style="arabic">    
+      <item>For the hidden layer, set
+<media id="error1" alt="error hidden ">
+  <image mime-type="image/jpeg" src="../../media/hidden_layer_error.jpg" height="25"/>
+</media></item></list>
+    <list id="import-auto-id1164546470840" list-type="enumerated" number-style="arabic">    
+      <item>Compute the desired partial derivative of the cost function with respect to W and b
+<media id="derivatives" alt="wb">
+  <image mime-type="image/jpeg" src="../../media/derivatives.jpg" height="40"/>
+</media></item></list>
+    <para id="import-auto-id1164546286904"><emphasis effect="bold">Implementation note:</emphasis> in step 2 and 3 above, we need to compute f’(z<sup>(l)</sup><sub>i </sub>) for each value of i. as our f(z) is the sigmoid function and we already have a<sup>(l)</sup><sub>i </sub>computed during the feedforward propagation process. Thus using the expression for f’(z), we can compute this as <media id="sigmoid" alt="derivativesigmoid">
+  <image mime-type="image/jpeg" src="../../media/sigmoid_derivative.jpg" height="22"/>
+</media>. </para>
+    <para id="import-auto-id1164543910030">
+      <emphasis effect="bold">Below is the pseudo code of the gradient descent algorithm:</emphasis>
+    </para>
+    <para id="import-auto-id1164546839595"><emphasis effect="bold">Note:</emphasis> ΔW<sup>(l) </sup>is a matrix of the same dimension as W<sup>(l)</sup> and Δb<sup>(l)</sup> is a vector of the same dimension as b<sup>(l) </sup>. one iteration of the gradient descent as follows:</para>
+    <list id="import-auto-id1164545019864" list-type="enumerated" number-style="arabic">
+      <item>Set ΔW<sup>(l) </sup>:= 0, Δb<sup>(l)</sup> := 0 for all l. </item>
+      <item>For i from 1 to m,</item>
+    </list>
+    <list id="import-auto-id1164546833147" list-type="enumerated" number-style="lower-alpha">
+      <item>Use backpropagation to compute
+<media id="gradient1" alt="gradient descent 1">
+  <image mime-type="image/jpeg" src="../../media/gradient_descent_1.jpg" height="40"/>
+</media></item>
+    </list>
+    <list id="import-auto-id1164546542895" list-type="enumerated" number-style="lower-alpha">
+      <item>Set   <media id="gradient2" alt="gradient descent 2">
+  <image mime-type="image/jpeg" src="../../media/gradient_descent_2.jpg" height="25"/>
+</media></item>
+      <item>Set <media id="gradient3" alt="gradient descent 3">
+  <image mime-type="image/jpeg" src="../../media/gradient_descent_3.jpg" height="25"/>
+</media></item>
+    </list>
+    <list id="import-auto-id1164546668203" list-type="enumerated" number-style="arabic">
+      <item>Update the parameters:<media id="gradient4" alt="gradient descent 4">
+  <image mime-type="image/jpeg" src="../../media/gradient_descent_4.jpg" height="40"/>
+</media></item>
+    </list>
+    <para id="import-auto-id1164550272554">We can now repeat the gradient descent steps to reduce our cost function J(W,b). </para>
+    </content>
+</document>

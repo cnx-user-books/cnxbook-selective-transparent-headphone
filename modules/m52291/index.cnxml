@@ -1,0 +1,27 @@
+<document xmlns="http://cnx.rice.edu/cnxml">
+  <title>Background on Independent Component Analysis</title>
+<metadata xmlns:md="http://cnx.rice.edu/mdml">
+  <md:content-id>m52291</md:content-id>
+  <md:title>Background on Independent Component Analysis</md:title>
+  <md:abstract>Describes the motivation and background behind using independent component analysis as the basis of the blind source separation algorithm used in this endeavor.</md:abstract>
+  <md:uuid>656a952d-6cd4-44f3-b270-771f66664875</md:uuid>
+</metadata>
+
+<content>
+    <para id="import-auto-id1172514261992">The blind source separation algorithm, we employed, is based around independent component analysis, which is explained in more detail below. The goal is to recover independent sources given only sensor observations that are linear mixtures of independent source signals. We assume that the source signals are statistically independent and non-Gaussian.</para>
+    <para id="import-auto-id1172494897792">ICA works by solving the following model.</para>
+
+<figure id="icaPureFig">
+<media id="icaPure" alt="ICA Model">
+	   
+  <image mime-type="image/png" src="../../media/icaPure.gif" height="25"/>
+		 
+</media>
+</figure>
+
+    <para id="import-auto-id1172490091707">Where vector <emphasis effect="bold">x</emphasis> contains <emphasis effect="italics">n</emphasis> observed signals, vector <emphasis effect="bold">s</emphasis> contains independent sources that comprise <emphasis effect="bold">x</emphasis>, and matrix <emphasis effect="bold">A</emphasis> denotes the mixing matrix. It is assumed that the mixing matrix <emphasis effect="bold">A</emphasis> and the source vector <emphasis effect="bold">x</emphasis> are both unknown. ICA algorithm thus produces the best estimation for both the mixing matrix and source vector.</para>
+    <para id="import-auto-id1172495269914">The first step in ICA is usually whitening (sphering) the data, which removes any correlations in the data, i.e. the signals are forced to be uncorrelated. Putting the words in mathematical terms, we seek a linear transformation <emphasis effect="bold">V</emphasis> such that when <emphasis effect="bold">y = Vx</emphasis> we now have <emphasis effect="bold">E[yy'] = I</emphasis>.</para>
+    <para id="import-auto-id1172498357175">After sphering, the separated signals can be found by an orthogonal transformation of the whitened signals <emphasis effect="bold">y</emphasis> (this is simply a rotation of the joint density). The appropriate rotation is sought by maximizing the non-normality of the marginal densities. This is because of the fact that a linear mixture of independent random variables is necessarily more Gaussian than the original variables.</para>
+    <para id="import-auto-id1172494963608">Although in theory ICA algorithm can perfectly separate source signals from observed signals, provided that sources are statistically independent and non-Gaussian, most of the algorithms do not work quite well in real world scenarios. For example, ICA does not typically deal with reflection; that is, if mixed signal is observed in a small room with reverberation, ICA algorithms such as FastICA hardly identifies individual components from the observed signal. Therefore, we need a more robust blind source separation algorithm, which is discussed in the following section.</para>
+  </content>
+</document>

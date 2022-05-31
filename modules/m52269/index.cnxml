@@ -1,0 +1,14 @@
+<document xmlns="http://cnx.rice.edu/cnxml">
+
+<title>References</title>
+<metadata xmlns:md="http://cnx.rice.edu/mdml">
+  <md:content-id>m52269</md:content-id>
+  <md:title>References</md:title>
+  <md:abstract/>
+  <md:uuid>f5cc4e92-6632-4f5a-9b16-99135788d107</md:uuid>
+</metadata>
+
+<content>
+  <para id="eip-159">Asano, Futoshi, et al. "Combined approach of array processing and independent component analysis for blind separation of acoustic signals."Speech and Audio Processing, IEEE Transactions on 11.3 (2003): 204-215.</para><para id="eip-791">"Backpropagation Algorithm." Unsupervised Feature Learning and Deep Learning. Stanford University, 26 Feb. 2011. Web. 16 Dec. 2014.</para><para id="eip-577">Hyvärinen, Aapo, and Erkki Oja. "Independent component analysis: algorithms and applications." Neural networks 13.4 (2000): 411-430.</para><para id="eip-482">"Neural Networks." Unsupervised Feature Learning and Deep Learning. Stanford University, 26 Feb. 2011. Web. 16 Dec. 2014.</para><para id="eip-826">Widrow, Bernard, et al. "Adaptive noise cancelling: Principles and applications." Proceedings of the IEEE 63.12 (1975): 1692-1716.</para></content>
+
+</document>
